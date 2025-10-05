@@ -49,7 +49,7 @@ With built-in location detection and clean UI design, it ensures users can acces
 
 bash
 # Clone the repository
-git clone https://github.com/spant671-ux/MediNearby.git
+git clone https://github.com/princepal09/MediNearby.git
 
 # Go to the project directory
 cd MediNearby
