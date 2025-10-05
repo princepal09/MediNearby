@@ -6,6 +6,8 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { db, auth } from "../firebase/firebase";
 import { signOut } from "firebase/auth";
 import Header from "../components/Header";
+import SmartChatbot from "../components/SmartChatbot";
+
 
 const specialties = [
   "All Specialties",
@@ -294,6 +296,12 @@ export default function MediNearby() {
           </div>
         </div>
       </div>
+
+      <SmartChatbot doctorsData={filteredData} />
+
+
+      
+     
 
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
