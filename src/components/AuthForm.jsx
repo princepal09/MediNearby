@@ -4,6 +4,18 @@ import { auth } from "../firebase/firebase";
 import { Mail, Lock, Hospital, UserCircle, Stethoscope } from "lucide-react";
 import Footer from "./Footer";
 
+// Header moved outside AuthForm so it doesn't re-render every state change
+const AuthHeader = () => (
+  <div className="bg-white/70 backdrop-blur-md shadow-md w-full p-5 flex items-center justify-start gap-3 sticky top-0 z-40">
+    <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-full animate-pulse">
+      <Hospital className="w-7 h-7 text-white" />
+    </div>
+    <h1 className="text-3xl font-extrabold text-gray-900 tracking-wider animate-fadeIn">
+      MediNearby
+    </h1>
+  </div>
+);
+
 function AuthForm({ onAuthSuccess }) {
   const [userRole, setUserRole] = useState("patient"); // 'patient' or 'doctor'
   const [isLogin, setIsLogin] = useState(true);
@@ -21,14 +33,13 @@ function AuthForm({ onAuthSuccess }) {
     try {
       if (isLogin) {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        // Pass user data along with their role
+        // Pass user data along with role
         onAuthSuccess({ ...userCredential.user, role: userRole });
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
-        // You can store the role in Firestore here for persistence
-        setToast({ 
-          message: `${userRole === 'doctor' ? 'Doctor' : 'Patient'} account created ✅`, 
-          type: "success" 
+        setToast({
+          message: `${userRole === "doctor" ? "Doctor" : "Patient"} account created ✅`,
+          type: "success",
         });
         setIsLogin(true);
       }
@@ -39,23 +50,13 @@ function AuthForm({ onAuthSuccess }) {
     }
   };
 
+  // Toast auto-hide
   useEffect(() => {
     if (toast) {
       const timer = setTimeout(() => setToast(null), 3000);
       return () => clearTimeout(timer);
     }
   }, [toast]);
-
-  const AuthHeader = () => (
-    <div className="bg-white/70 backdrop-blur-md shadow-md w-full p-5 flex items-center justify-start gap-3 sticky top-0 z-40">
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-3 rounded-full animate-pulse">
-        <Hospital className="w-7 h-7 text-white" />
-      </div>
-      <h1 className="text-3xl font-extrabold text-gray-900 tracking-wider animate-fadeIn">
-        MediNearby
-      </h1>
-    </div>
-  );
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -96,6 +97,7 @@ function AuthForm({ onAuthSuccess }) {
             </button>
           </div>
 
+          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div className="relative group">
@@ -108,10 +110,6 @@ function AuthForm({ onAuthSuccess }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-14 pr-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:outline-none shadow-sm transition-all duration-300 hover:scale-[1.01]"
-                style={{
-                  focusRingColor: userRole === 'doctor' ? '#9333ea' : '#3b82f6',
-                  focusBorderColor: userRole === 'doctor' ? '#9333ea' : '#3b82f6'
-                }}
                 required
               />
             </div>
@@ -176,6 +174,7 @@ function AuthForm({ onAuthSuccess }) {
 
       <Footer />
 
+      {/* Animations */}
       <style>
         {`
           @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
