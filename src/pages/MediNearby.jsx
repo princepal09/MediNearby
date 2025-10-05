@@ -236,7 +236,7 @@ export default function MediNearby() {
           <div className="lg:col-span-1 space-y-4">
             <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/20 mb-4">
               <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Nearby Doctors
+                Nearby Doctors and Pharmacies
               </h2>
               <p className="text-sm text-gray-600 mt-1">
                 {filteredData.length} {filteredData.length === 1 ? 'result' : 'results'} found within 20km
